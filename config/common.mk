@@ -58,15 +58,17 @@ PRODUCT_COPY_FILES += \
 
 # Required packages
 PRODUCT_PACKAGES += \
-    Development \
     SpareParts \
     su
+
+#    Development \
 
 # Optional packages
 PRODUCT_PACKAGES += \
     Basic \
-    LiveWallpapersPicker \
-    PhaseBeam
+    LiveWallpapersPicker
+
+#    PhaseBeam \
 
 # AudioFX
 PRODUCT_PACKAGES += \
@@ -192,13 +194,13 @@ PLATFORM_VERSION_CODENAME := $(SLIM_BUILD_TYPE)
 
 # SlimIRC
 # export INCLUDE_SLIMIRC=1 for unofficial builds
-ifneq ($(filter WEEKLY OFFICIAL,$(SLIM_BUILD_TYPE)),)
-    INCLUDE_SLIMIRC = 1
-endif
+#ifneq ($(filter WEEKLY OFFICIAL,$(SLIM_BUILD_TYPE)),)
+#    INCLUDE_SLIMIRC = 1
+#endif
 
-ifneq ($(INCLUDE_SLIMIRC),)
-    PRODUCT_PACKAGES += SlimIRC
-endif
+#ifneq ($(INCLUDE_SLIMIRC),)
+#    PRODUCT_PACKAGES += SlimIRC
+#endif
 
 # Set all versions
 SLIM_VERSION := Slim-$(PRODUCT_VERSION_MAJOR).$(PRODUCT_VERSION_MINOR).$(PRODUCT_VERSION_MAINTENANCE)-$(SLIM_BUILD_TYPE)$(SLIM_POSTFIX)
