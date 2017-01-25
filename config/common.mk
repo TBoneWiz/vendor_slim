@@ -63,17 +63,30 @@ PRODUCT_COPY_FILES += \
 
 # Required packages
 PRODUCT_PACKAGES += \
-    SpareParts \
-    su
+    SpareParts
 
-#    Development \
+# These packages are excluded from essential build (default)
+ifeq ($(SLIM_FULL),true)
+PRODUCT_PACKAGES += \
+    PhaseBeam
+# These packages are excluded from user builds
+ifneq ($(TARGET_BUILD_VARIANT),user)
+PRODUCT_PACKAGES += \
+    Development \
+    su
+else
+# Conditionally build in su
+ifeq ($(WITH_SU),true)
+PRODUCT_PACKAGES += \
+    su
+endif
+endif
+endif
 
 # Optional packages
 PRODUCT_PACKAGES += \
     Basic \
     LiveWallpapersPicker
-
-#    PhaseBeam \
 
 # AudioFX
 PRODUCT_PACKAGES += \
@@ -179,8 +192,15 @@ endif
 # Versioning System
 # SlimLP first version.
 PRODUCT_VERSION_MAJOR = 6.0.1
+
+ifeq ($(SLIM_FULL),true)
 PRODUCT_VERSION_MINOR = build
+else
+PRODUCT_VERSION_MINOR = essential
+endif
+
 PRODUCT_VERSION_MAINTENANCE = 2.0
+
 ifdef SLIM_BUILD_EXTRA
     SLIM_POSTFIX := -$(SLIM_BUILD_EXTRA)
 endif
@@ -199,15 +219,19 @@ endif
 
 PLATFORM_VERSION_CODENAME := $(SLIM_BUILD_TYPE)
 
+# SlimIRC is excluded from essential build (default)
+ifeq ($(SLIM_FULL),true)
 # SlimIRC
 # export INCLUDE_SLIMIRC=1 for unofficial builds
-#ifneq ($(filter WEEKLY OFFICIAL,$(SLIM_BUILD_TYPE)),)
-#    INCLUDE_SLIMIRC = 1
-#endif
 
-#ifneq ($(INCLUDE_SLIMIRC),)
-#    PRODUCT_PACKAGES += SlimIRC
-#endif
+ifneq ($(filter WEEKLY OFFICIAL,$(SLIM_BUILD_TYPE)),)
+    INCLUDE_SLIMIRC = 1
+endif
+endif
+
+ifneq ($(INCLUDE_SLIMIRC),)
+    PRODUCT_PACKAGES += SlimIRC
+endif
 
 # Set all versions
 SLIM_VERSION := Slim-$(PRODUCT_VERSION_MAJOR).$(PRODUCT_VERSION_MINOR).$(PRODUCT_VERSION_MAINTENANCE)-$(SLIM_BUILD_TYPE)$(SLIM_POSTFIX)
