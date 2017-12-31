@@ -189,10 +189,6 @@ PRODUCT_BOOTANIMATION := vendor/slim/prebuilt/common/bootanimation/$(TARGET_BOOT
 endif
 endif
 
-# WebView
-PRODUCT_COPY_FILES += \
-    vendor/slim/prebuilt/common/webview/webview.apk:system/app/webview/webview.apk
-
 # Versioning System
 # SlimLP first version.
 PRODUCT_VERSION_MAJOR = 6.0.1
